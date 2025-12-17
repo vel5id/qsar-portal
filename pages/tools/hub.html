@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Инструменты In Silico - QSAR Portal</title>
+    <meta name="description"
+        content="Интерактивные инструменты для анализа молекул: калькулятор дескрипторов, конвертер форматов, сравнение сервисов.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="../../assets/images/favicon.png">
+    <style>
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .tool-card {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 6px var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.15);
+        }
+
+        .tool-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .tool-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .tool-card p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .tool-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tool-tag {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+
+        .tool-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 600;
+        }
+
+        .badge-new {
+            background: #28a745;
+            color: white;
+        }
+
+        .badge-python {
+            background: linear-gradient(135deg, #3776ab, #ffd43b);
+            color: white;
+        }
+
+        .badge-api {
+            background: #007bff;
+            color: white;
+        }
+
+        .section-title {
+            margin-top: 50px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">QSAR Portal 🧬</div>
+            <button class="theme-toggle" aria-label="Тема"><i class="fas fa-moon"></i></button>
+            <button class="menu-toggle" aria-label="Меню"><i class="fas fa-bars"></i></button>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../../index.html"><i class="fas fa-home"></i> Главная</a></li>
+                    <li><a href="../../pages/basics/index.html"><i class="fas fa-book"></i> Основы QSAR</a></li>
+                    <li><a href="hub.html" class="active"><i class="fas fa-laptop-code"></i> Инструменты</a></li>
+                    <li><a href="../../pages/practice/smiles.html"><i class="fas fa-flask"></i> Практика</a></li>
+                    <li><a href="../../pages/literature/index.html"><i class="fas fa-graduation-cap"></i> Литература</a>
+                    </li>
+                    <li><a href="../../pages/contacts.html"><i class="fas fa-envelope"></i> Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb"
+        style="background: var(--bg-secondary); padding: 10px 0; border-bottom: 1px solid var(--border-color);">
+        <div class="container">
+            <a href="../../index.html">Главная</a> /
+            <span>Инструменты</span>
+        </div>
+    </nav>
+
+    <main>
+        <section class="content-section">
+            <div class="container">
+                <h1><i class="fas fa-toolbox"></i> Инструменты In Silico</h1>
+                <p style="margin-top: 10px; color: var(--text-secondary); max-width: 700px;">
+                    Интерактивные инструменты для анализа молекул, расчёта дескрипторов и работы с химическими данными.
+                </p>
+
+                <!-- Our Tools -->
+                <h2 class="section-title"><i class="fas fa-rocket"></i> Наши инструменты</h2>
+                <div class="tools-grid">
+                    <!-- Calculator -->
+                    <div class="tool-card">
+                        <span class="tool-badge badge-python"><i class="fab fa-python"></i> Python</span>
+                        <div class="tool-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h3>Калькулятор дескрипторов</h3>
+                        <p>Расчёт MW, LogP, TPSA, HBD, HBA и других дескрипторов с помощью Python (Pyodide) прямо в
+                            браузере.</p>
+                        <div class="tool-tags">
+                            <span class="tool-tag">Pyodide</span>
+                            <span class="tool-tag">Batch</span>
+                            <span class="tool-tag">Lipinski</span>
+                        </div>
+                        <a href="calculator.html" class="btn" style="width: 100%;">
+                            <i class="fas fa-play"></i> Открыть
+                        </a>
+                    </div>
+
+                    <!-- PubChem Search -->
+                    <div class="tool-card">
+                        <span class="tool-badge badge-new">NEW</span>
+                        <div class="tool-icon" style="background: linear-gradient(135deg, #f39c12, #d68910);">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3>Поиск PubChem</h3>
+                        <p>Поиск соединений по SMILES, названию или CID в базе 115+ миллионов молекул.</p>
+                        <div class="tool-tags">
+                            <span class="tool-tag">API</span>
+                            <span class="tool-tag">115M+</span>
+                            <span class="tool-tag">Image</span>
+                        </div>
+                        <a href="search.html" class="btn" style="width: 100%;">
+                            <i class="fas fa-play"></i> Открыть
+                        </a>
+                    </div>
+
+                    <!-- Analyzer -->
+                    <div class="tool-card">
+                        <span class="tool-badge badge-api">API</span>
+                        <div class="tool-icon" style="background: linear-gradient(135deg, #11998e, #38ef7d);">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <h3>Анализатор молекул</h3>
+                        <p>3D визуализация, радар биодоступности, интеграция с PubChem и проверка Rule of 5.</p>
+                        <div class="tool-tags">
+                            <span class="tool-tag">3Dmol.js</span>
+                            <span class="tool-tag">Chart.js</span>
+                            <span class="tool-tag">PubChem</span>
+                        </div>
+                        <a href="../../pages/practice/smiles.html" class="btn" style="width: 100%;">
+                            <i class="fas fa-play"></i> Открыть
+                        </a>
+                    </div>
+
+                    <!-- Comparison -->
+                    <div class="tool-card">
+                        <div class="tool-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+                            <i class="fas fa-table"></i>
+                        </div>
+                        <h3>Сравнение сервисов</h3>
+                        <p>Таблица сравнения SwissADME, PASS, ADMETlab, PubChem, ProTox-II по ключевым параметрам.</p>
+                        <div class="tool-tags">
+                            <span class="tool-tag">ADMET</span>
+                            <span class="tool-tag">Toxicity</span>
+                        </div>
+                        <a href="comparison.html" class="btn" style="width: 100%;">
+                            <i class="fas fa-play"></i> Открыть
+                        </a>
+                    </div>
+                </div>
+
+                <!-- External Services -->
+                <h2 class="section-title"><i class="fas fa-external-link-alt"></i> Внешние сервисы</h2>
+                <div class="tools-grid">
+                    <!-- SwissADME -->
+                    <div class="tool-card">
+                        <div class="tool-icon" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <h3>SwissADME</h3>
+                        <p>Бесплатный веб-сервис для расчёта физико-химических, ADMET свойств и drug-likeness.</p>
+                        <div class="tool-tags">
+                            <span class="tool-tag">SIB</span>
+                            <span class="tool-tag">ADME</span>
+                        </div>
+                        <a href="swissadme.html" class="btn" style="width: 100%;">
+                            <i class="fas fa-info-circle"></i> Подробнее
+                        </a>
+                    </div>
+
+                    <!-- PASS -->
+                    <div class="tool-card">
+                        <div class="tool-icon" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h3>PASS Online</h3>
+                        <p>Предсказание биологической активности по структуре на основе SAR Analysis.</p>
+                        <div class="tool-tags">
+                            <span class="tool-tag">Way2Drug</span>
+                            <span class="tool-tag">Pa/Pi</span>
+                        </div>
+                        <a href="pass.html" class="btn" style="width: 100%;">
+                            <i class="fas fa-info-circle"></i> Подробнее
+                        </a>
+                    </div>
+
+                    <!-- ADMETlab -->
+                    <div class="tool-card">
+                        <div class="tool-icon" style="background: linear-gradient(135deg, #3498db, #2980b9);">
+                            <i class="fas fa-vial"></i>
+                        </div>
+                        <h3>ADMETlab 2.0</h3>
+                        <p>Комплексное предсказание ADMET свойств с использованием ML-моделей.</p>
+                        <div class="tool-tags">
+                            <span class="tool-tag">ML</span>
+                            <span class="tool-tag">53 модели</span>
+                        </div>
+                        <a href="admetlab.html" class="btn" style="width: 100%;">
+                            <i class="fas fa-info-circle"></i> Подробнее
+                        </a>
+                    </div>
+
+                    <!-- Way2Drug -->
+                    <div class="tool-card">
+                        <div class="tool-icon" style="background: linear-gradient(135deg, #1abc9c, #16a085);">
+                            <i class="fas fa-pills"></i>
+                        </div>
+                        <h3>Way2Drug</h3>
+                        <p>Платформа для компьютерного дизайна лекарств от ИБМ РАН.</p>
+                        <div class="tool-tags">
+                            <span class="tool-tag">РАН</span>
+                            <span class="tool-tag">PASS</span>
+                        </div>
+                        <a href="way2drug.html" class="btn" style="width: 100%;">
+                            <i class="fas fa-info-circle"></i> Подробнее
+                        </a>
+                    </div>
+
+                    <!-- PubChem -->
+                    <div class="tool-card">
+                        <div class="tool-icon" style="background: linear-gradient(135deg, #f39c12, #e67e22);">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h3>PubChem</h3>
+                        <p>Крупнейшая открытая база данных химических соединений от NIH.</p>
+                        <div class="tool-tags">
+                            <span class="tool-tag">NIH</span>
+                            <span class="tool-tag">115M+</span>
+                        </div>
+                        <a href="pubchem.html" class="btn" style="width: 100%;">
+                            <i class="fas fa-info-circle"></i> Подробнее
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>© 2025 Университетский проект. Кафедра химии/биоинформатики.</p>
+        </div>
+    </footer>
+
+    <script src="../../script.js"></script>
+</body>
+
+</html>

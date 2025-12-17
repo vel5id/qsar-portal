@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>История QSAR - Timeline</title>
+    <meta name="description" content="Интерактивная шкала времени развития QSAR-моделирования от 1868 до наших дней.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="../../assets/images/favicon.png">
+    <style>
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #667eea, #764ba2, #f093fb);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            width: 45%;
+            padding: 20px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px var(--shadow);
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            transform: scale(1.02);
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 55%;
+            text-align: left;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border: 4px solid #667eea;
+            border-radius: 50%;
+            top: 25px;
+        }
+
+        .timeline-item:nth-child(odd)::before {
+            right: -32px;
+        }
+
+        .timeline-item:nth-child(even)::before {
+            left: -32px;
+        }
+
+        .timeline-year {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .timeline-item h4 {
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .timeline-item p {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .timeline-item .author {
+            font-style: italic;
+            color: var(--accent-secondary);
+            font-size: 0.85em;
+            margin-top: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: calc(100% - 50px);
+                left: 40px !important;
+                text-align: left !important;
+            }
+
+            .timeline-item::before {
+                left: -30px !important;
+                right: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">QSAR Portal 🧬</div>
+            <button class="theme-toggle" aria-label="Тема"><i class="fas fa-moon"></i></button>
+            <button class="menu-toggle" aria-label="Меню"><i class="fas fa-bars"></i></button>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../../index.html"><i class="fas fa-home"></i> Главная</a></li>
+                    <li><a href="index.html" class="active"><i class="fas fa-book"></i> Основы QSAR</a></li>
+                    <li><a href="../tools/hub.html"><i class="fas fa-laptop-code"></i> Инструменты</a>
+                    </li>
+                    <li><a href="../../pages/practice/smiles.html"><i class="fas fa-flask"></i> Практика</a></li>
+                    <li><a href="../../pages/literature/index.html"><i class="fas fa-graduation-cap"></i> Литература</a>
+                    </li>
+                    <li><a href="../../pages/contacts.html"><i class="fas fa-envelope"></i> Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb"
+        style="background: var(--bg-secondary); padding: 10px 0; border-bottom: 1px solid var(--border-color);">
+        <div class="container">
+            <a href="../../index.html">Главная</a> /
+            <a href="index.html">Основы QSAR</a> /
+            <span>История QSAR</span>
+        </div>
+    </nav>
+
+    <main>
+        <section class="content-section">
+            <div class="container">
+                <h1><i class="fas fa-history"></i> История развития QSAR</h1>
+                <p style="text-align: center; max-width: 700px; margin: 0 auto 30px; color: var(--text-secondary);">
+                    От первых наблюдений Крам-Брауна до современных методов машинного обучения
+                </p>
+
+                <div class="timeline">
+                    <!-- 1868 -->
+                    <div class="timeline-item">
+                        <span class="timeline-year">1868</span>
+                        <h4><i class="fas fa-flask"></i> Начало SAR</h4>
+                        <p>Крам-Браун и Фрейзер впервые описали зависимость биологической активности от химической
+                            структуры.</p>
+                        <div class="author">Crum-Brown & Fraser</div>
+                    </div>
+
+                    <!-- 1893 -->
+                    <div class="timeline-item">
+                        <span class="timeline-year">1893</span>
+                        <h4><i class="fas fa-chart-line"></i> Правило Рихета</h4>
+                        <p>Открытие связи между токсичностью и растворимостью соединений в липидах.</p>
+                        <div class="author">Richet C.</div>
+                    </div>
+
+                    <!-- 1964 -->
+                    <div class="timeline-item">
+                        <span class="timeline-year">1964</span>
+                        <h4><i class="fas fa-star"></i> Рождение QSAR</h4>
+                        <p>Корвин Ханш разработал метод множественной регрессии для количественного описания SAR.
+                            Введение параметра π (липофильность).</p>
+                        <div class="author">Hansch C. & Fujita T.</div>
+                    </div>
+
+                    <!-- 1977 -->
+                    <div class="timeline-item">
+                        <span class="timeline-year">1977</span>
+                        <h4><i class="fas fa-cube"></i> 3D-QSAR</h4>
+                        <p>Крамер представил метод CoMFA (Comparative Molecular Field Analysis) — анализ молекулярных
+                            полей.</p>
+                        <div class="author">Cramer R.D.</div>
+                    </div>
+
+                    <!-- 1997 -->
+                    <div class="timeline-item">
+                        <span class="timeline-year">1997</span>
+                        <h4><i class="fas fa-pills"></i> Правило Липинского</h4>
+                        <p>Сформулировано "Правило пяти" для оценки drug-likeness пероральных препаратов.</p>
+                        <div class="author">Lipinski C.A.</div>
+                    </div>
+
+                    <!-- 2010 -->
+                    <div class="timeline-item">
+                        <span class="timeline-year">2010</span>
+                        <h4><i class="fas fa-laptop-code"></i> SwissADME, PASS</h4>
+                        <p>Развитие веб-сервисов для предсказания ADMET свойств. QSAR становится доступным онлайн.</p>
+                        <div class="author">SIB, Way2Drug</div>
+                    </div>
+
+                    <!-- 2020s -->
+                    <div class="timeline-item">
+                        <span class="timeline-year">2020+</span>
+                        <h4><i class="fas fa-robot"></i> AI/ML в QSAR</h4>
+                        <p>Глубокое обучение, графовые нейросети (GNN), AlphaFold. QSAR интегрируется с ИИ.</p>
+                        <div class="author">DeepMind, Academia</div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 40px;">
+                    <a href="index.html" class="btn"><i class="fas fa-arrow-left"></i> К основам QSAR</a>
+                    <a href="pipeline.html" class="btn"
+                        style="background: linear-gradient(135deg, #667eea, #764ba2); margin-left: 10px;">
+                        <i class="fas fa-pills"></i> Drug Discovery Pipeline
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>© 2025 Университетский проект. Кафедра химии/биоинформатики.</p>
+        </div>
+    </footer>
+
+    <script src="../../script.js"></script>
+</body>
+
+</html>

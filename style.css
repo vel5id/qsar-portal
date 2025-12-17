@@ -1,0 +1,857 @@
+/* Сброс стилей */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* CSS Variables for Theming */
+:root {
+    --bg-primary: #f4f7f6;
+    --bg-secondary: #ffffff;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --accent-primary: #003366;
+    --accent-secondary: #007bff;
+    --border-color: #e0e0e0;
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+    --bg-primary: #1a1a2e;
+    --bg-secondary: #16213e;
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --accent-primary: #0f4c75;
+    --accent-secondary: #3282b8;
+    --border-color: #2a2a4a;
+    --shadow: rgba(0, 0, 0, 0.3);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Контейнер для центровки */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Шапка */
+.site-header {
+    background-color: #003366;
+    /* Научный синий */
+    color: #fff;
+    padding: 1rem 0;
+}
+
+.site-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Навигация */
+/* Навигация */
+.main-nav ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    position: relative;
+    z-index: 100;
+}
+
+.main-nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 10px 0;
+    display: block;
+}
+
+.main-nav a:hover {
+    text-decoration: underline;
+}
+
+/* Dropdown Menu Styles */
+.main-nav li {
+    position: relative;
+}
+
+.main-nav ul ul {
+    display: none;
+    /* Скрыто по умолчанию */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #004080;
+    min-width: 220px;
+    flex-direction: column;
+    gap: 0;
+    padding: 5px 0;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.main-nav ul ul li {
+    width: 100%;
+}
+
+.main-nav ul ul a {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+.main-nav ul ul a:hover {
+    background-color: #0059b3;
+    text-decoration: none;
+}
+
+/* Показываем при наведении */
+.main-nav li:hover>ul {
+    display: flex;
+}
+
+/* Hero секция */
+.hero {
+    background-color: #fff;
+    padding: 60px 0;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: #003366;
+}
+
+/* Иконки в меню и кнопках */
+i.fas,
+i.fab {
+    margin-right: 8px;
+}
+
+.btn {
+    display: inline-block;
+    background: #007bff;
+    color: white;
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 6px;
+    margin-top: 20px;
+    font-weight: 600;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2);
+}
+
+.btn:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
+}
+
+/* Основной контент */
+.content-section {
+    padding: 40px 0;
+}
+
+h2 {
+    color: #003366;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #007bff;
+    display: inline-block;
+}
+
+/* Таблицы (для сравнения) */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: white;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #f0f0f0;
+}
+
+/* Alerts */
+.result-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.result-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Подвал */
+.site-footer {
+    background-color: #222;
+    color: #ccc;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: auto;
+}
+
+/* Mobile Menu Toggle Button */
+.menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 10px;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .site-header .container {
+        flex-wrap: wrap;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .main-nav {
+        display: none;
+        width: 100%;
+        order: 3;
+    }
+
+    .main-nav.active {
+        display: block;
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+        gap: 0;
+        padding: 10px 0;
+    }
+
+    .main-nav ul ul {
+        position: static;
+        display: none;
+        background-color: #002244;
+        box-shadow: none;
+        padding-left: 20px;
+    }
+
+    .main-nav li:hover>ul {
+        display: flex;
+    }
+
+    .main-nav a {
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+
+    .logo {
+        font-size: 1.2rem;
+    }
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 8px;
+    margin-left: 10px;
+    border-radius: 50%;
+    transition: background 0.3s ease;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Quiz Result Warning */
+.result-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+/* Dark Mode Content Adjustments */
+[data-theme="dark"] .content-section {
+    background-color: var(--bg-secondary);
+}
+
+[data-theme="dark"] table {
+    background-color: var(--bg-secondary);
+}
+
+[data-theme="dark"] .site-header {
+    background-color: var(--accent-primary);
+}
+
+[data-theme="dark"] .site-footer {
+    background-color: #111;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+}
+
+.breadcrumb a {
+    color: var(--accent-secondary);
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+/* Sample Library Buttons */
+.sample-btn {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+}
+
+.sample-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4);
+}
+
+.sample-btn.active {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.3);
+}
+
+.sample-btn i {
+    margin-right: 6px;
+}
+
+/* Result Cards */
+.result-card,
+.viewer-card,
+.radar-card,
+.links-card,
+.input-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.result-card:hover,
+.viewer-card:hover,
+.radar-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px var(--shadow);
+}
+
+/* Dark mode adjustments for analyzer */
+[data-theme="dark"] .sample-btn {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] #viewer3d {
+    background: #0d1117;
+}
+
+[data-theme="dark"] input {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#resultsSection {
+    animation: fadeIn 0.4s ease;
+}
+
+/* Code styling */
+code {
+    background: rgba(0, 0, 0, 0.05);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Fira Code', monospace;
+}
+
+[data-theme="dark"] code {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* ================================================
+   VISUAL IMPROVEMENTS - Premium Design System
+   ================================================ */
+
+/* 1. STICKY FOOTER - Fix footer at bottom */
+html,
+body {
+    min-height: 100vh;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.site-footer {
+    flex-shrink: 0;
+    margin-top: auto;
+}
+
+/* 2. GLASSMORPHISM CARDS */
+.glass-card,
+.result-card,
+.viewer-card,
+.radar-card,
+.input-card,
+.links-card {
+    background: rgba(255, 255, 255, 0.7) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+[data-theme="dark"] .glass-card,
+[data-theme="dark"] .result-card,
+[data-theme="dark"] .viewer-card,
+[data-theme="dark"] .radar-card,
+[data-theme="dark"] .input-card,
+[data-theme="dark"] .links-card {
+    background: rgba(22, 33, 62, 0.7) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 3. GRADIENT HEADINGS */
+.gradient-text,
+h1,
+h2 {
+    background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 5s ease infinite;
+}
+
+@keyframes gradientShift {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Keep white text in hero and header */
+.hero h1,
+.site-header * {
+    background: none;
+    -webkit-text-fill-color: white;
+}
+
+/* 4. SCROLL ANIMATIONS (Intersection Observer in JS) */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 5. 3D CARD HOVER EFFECT */
+.card-3d,
+.pipeline-step,
+.timeline-item,
+.flow-step,
+.stat-card,
+.explanation-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+.card-3d:hover,
+.pipeline-step:hover,
+.timeline-item:hover,
+.flow-step:hover,
+.stat-card:hover,
+.explanation-card:hover {
+    transform: translateY(-8px) rotateX(2deg) rotateY(-2deg);
+    box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+}
+
+/* 6. LOADING SKELETON */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+[data-theme="dark"] .skeleton {
+    background: linear-gradient(90deg, #2a2a4a 25%, #3a3a5a 50%, #2a2a4a 75%);
+    background-size: 200% 100%;
+}
+
+/* 7. TOAST NOTIFICATIONS */
+.toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    padding: 15px 25px;
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3);
+    font-weight: 500;
+    z-index: 10000;
+    animation: slideInRight 0.4s ease, fadeOut 0.4s ease 2.6s forwards;
+}
+
+.toast.error {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    box-shadow: 0 10px 30px rgba(220, 53, 69, 0.3);
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+/* 8. SMOOTH SCROLL */
+html {
+    scroll-behavior: smooth;
+}
+
+/* 9. RIPPLE BUTTON EFFECT */
+.btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:active::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* Enhanced button hover */
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 123, 255, 0.3);
+}
+
+/* 10. PRELOADER */
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.preloader-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(102, 126, 234, 0.2);
+    border-top-color: #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* DNA Animation for preloader */
+.dna-loader {
+    display: flex;
+    gap: 8px;
+}
+
+.dna-loader span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    animation: dna 1.4s ease-in-out infinite;
+}
+
+.dna-loader span:nth-child(1) {
+    background: #667eea;
+    animation-delay: 0s;
+}
+
+.dna-loader span:nth-child(2) {
+    background: #764ba2;
+    animation-delay: 0.2s;
+}
+
+.dna-loader span:nth-child(3) {
+    background: #f093fb;
+    animation-delay: 0.4s;
+}
+
+.dna-loader span:nth-child(4) {
+    background: #4facfe;
+    animation-delay: 0.6s;
+}
+
+@keyframes dna {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-20px) scale(1.2);
+    }
+}
+
+/* 11. CUSTOM CURSOR (optional - enabled via class) */
+.custom-cursor {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%23667eea'%3E%3Ccircle cx='12' cy='12' r='8'/%3E%3C/svg%3E") 12 12, auto;
+}
+
+/* 12. ENHANCED SELECTION */
+::selection {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: #667eea;
+    color: white;
+}
+
+/* 13. SCROLL PROGRESS BAR */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+    z-index: 10000;
+    width: 0%;
+    transition: width 0.1s ease;
+}
+
+/* 14. FOCUS STYLES FOR ACCESSIBILITY */
+*:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+*:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* 15. ENHANCED SHADOWS */
+.premium-shadow {
+    box-shadow:
+        0 4px 6px rgba(0, 0, 0, 0.05),
+        0 10px 20px rgba(102, 126, 234, 0.1),
+        0 20px 40px rgba(102, 126, 234, 0.05);
+}
+
+/* 16. MOBILE HAMBURGER MENU */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 5px;
+    z-index: 1001;
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px 10px;
+    margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .main-nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 280px;
+        height: 100vh;
+        background: linear-gradient(135deg, #003366, #004488);
+        transition: right 0.3s ease;
+        z-index: 1000;
+        padding-top: 60px;
+        box-shadow: -5px 0 20px rgba(0,0,0,0.3);
+    }
+
+    .main-nav.active {
+        right: 0;
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+        gap: 0;
+        padding: 20px;
+    }
+
+    .main-nav li {
+        width: 100%;
+    }
+
+    .main-nav a {
+        padding: 15px 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        font-size: 1.1rem;
+    }
+
+    .main-nav ul ul {
+        position: static;
+        background: rgba(0,0,0,0.2);
+        min-width: 100%;
+        display: none;
+        padding-left: 20px;
+    }
+
+    .main-nav li.submenu-open > ul {
+        display: flex;
+    }
+
+    /* Mobile menu backdrop */
+    .menu-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 999;
+    }
+
+    .menu-backdrop.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Close button in mobile menu */
+    .main-nav::before {
+        content: '✕';
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 1.5rem;
+        color: white;
+        cursor: pointer;
+    }
+}

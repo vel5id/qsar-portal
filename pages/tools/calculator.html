@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор дескрипторов - QSAR Portal</title>
+    <meta name="description" content="Расчёт молекулярных дескрипторов с помощью Python (Pyodide) прямо в браузере.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="../../assets/images/favicon.png">
+    <!-- Pyodide -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+    <style>
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 900px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .input-panel,
+        .output-panel {
+            background: var(--bg-secondary);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+
+        .descriptor-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .descriptor-table th,
+        .descriptor-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .descriptor-table th {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .descriptor-value {
+            font-family: 'Fira Code', monospace;
+            font-weight: 600;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+
+        .status-loading {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .status-ready {
+            background: #28a745;
+            color: white;
+        }
+
+        .status-error {
+            background: #dc3545;
+            color: white;
+        }
+
+        .batch-input {
+            width: 100%;
+            min-height: 150px;
+            padding: 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            resize: vertical;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .python-badge {
+            background: linear-gradient(135deg, #3776ab, #ffd43b);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .python-badge i {
+            color: #ffd43b;
+        }
+
+        /* Pyodide Loader Overlay */
+        .pyodide-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .pyodide-loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-content {
+            text-align: center;
+            color: white;
+        }
+
+        .loader-icon {
+            font-size: 4em;
+            margin-bottom: 30px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .loader-icon i {
+            background: linear-gradient(135deg, #3776ab, #ffd43b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .loader-progress {
+            width: 300px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .loader-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #3776ab, #ffd43b);
+            width: 0%;
+            animation: loadProgress 12s ease-out forwards;
+        }
+
+        .loader-fact {
+            font-size: 0.95em;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 400px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes loadProgress {
+            0% {
+                width: 0%;
+            }
+
+            20% {
+                width: 30%;
+            }
+
+            50% {
+                width: 60%;
+            }
+
+            80% {
+                width: 85%;
+            }
+
+            100% {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Pyodide Loader Overlay -->
+    <div id="pyodideLoader" class="pyodide-loader">
+        <div class="loader-content">
+            <div class="loader-icon"><i class="fab fa-python"></i></div>
+            <h2>Загрузка Python...</h2>
+            <div class="loader-progress">
+                <div class="loader-progress-bar"></div>
+            </div>
+            <p id="loaderStatus">Инициализация Pyodide (~10 МБ)</p>
+            <p id="loaderFact" class="loader-fact">💡 QSAR расшифровывается как Quantitative Structure-Activity
+                Relationship</p>
+        </div>
+    </div>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">QSAR Portal 🧬</div>
+            <button class="theme-toggle" aria-label="Тема"><i class="fas fa-moon"></i></button>
+            <button class="menu-toggle" aria-label="Меню"><i class="fas fa-bars"></i></button>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../../index.html"><i class="fas fa-home"></i> Главная</a></li>
+                    <li><a href="../../pages/basics/index.html"><i class="fas fa-book"></i> Основы QSAR</a></li>
+                    <li><a href="hub.html" class="active"><i class="fas fa-laptop-code"></i> Инструменты</a></li>
+                    <li><a href="../../pages/practice/smiles.html"><i class="fas fa-flask"></i> Практика</a></li>
+                    <li><a href="../../pages/literature/index.html"><i class="fas fa-graduation-cap"></i> Литература</a>
+                    </li>
+                    <li><a href="../../pages/contacts.html"><i class="fas fa-envelope"></i> Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb"
+        style="background: var(--bg-secondary); padding: 10px 0; border-bottom: 1px solid var(--border-color);">
+        <div class="container">
+            <a href="../../index.html">Главная</a> /
+            <a href="hub.html">Инструменты</a> /
+            <span>Калькулятор дескрипторов</span>
+        </div>
+    </nav>
+
+    <main>
+        <section class="content-section">
+            <div class="container">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                    <h1><i class="fas fa-calculator"></i> Калькулятор молекулярных дескрипторов</h1>
+                    <span class="python-badge"><i class="fab fa-python"></i> Powered by Python (Pyodide)</span>
+                </div>
+
+                <p style="margin-top: 10px; color: var(--text-secondary);">
+                    Расчёт дескрипторов выполняется локально в вашем браузере с помощью Python.
+                </p>
+
+                <!-- Status -->
+                <div style="margin: 20px 0;">
+                    <strong>Статус Python:</strong>
+                    <span id="pyStatus" class="status-badge status-loading">
+                        <i class="fas fa-spinner fa-spin"></i> Загрузка Pyodide...
+                    </span>
+                </div>
+
+                <div class="calculator-grid">
+                    <!-- Input Panel -->
+                    <div class="input-panel">
+                        <h3><i class="fas fa-edit"></i> Ввод данных</h3>
+
+                        <!-- Mode Switch -->
+                        <div style="margin: 20px 0; display: flex; gap: 10px;">
+                            <button id="singleMode" class="btn" style="flex: 1;">
+                                <i class="fas fa-atom"></i> Одна молекула
+                            </button>
+                            <button id="batchMode" class="btn" style="flex: 1; background: #6c757d;">
+                                <i class="fas fa-list"></i> Батч (несколько)
+                            </button>
+                        </div>
+
+                        <!-- Single Input -->
+                        <div id="singleInput">
+                            <label style="display: block; margin-bottom: 10px; font-weight: 600;">SMILES:</label>
+                            <div style="display: flex; gap: 10px;">
+                                <input type="text" id="smilesInput" placeholder="CC(=O)OC1=CC=CC=C1C(=O)O"
+                                    style="flex: 1; padding: 12px; border: 2px solid var(--border-color); border-radius: 8px; font-family: monospace; background: var(--bg-primary); color: var(--text-primary);">
+                            </div>
+
+                            <div style="margin-top: 15px;">
+                                <p style="font-size: 0.9em; color: var(--text-secondary); margin-bottom: 10px;">Примеры:
+                                </p>
+                                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                                    <button class="sample-btn" data-smiles="CC(=O)OC1=CC=CC=C1C(=O)O">Аспирин</button>
+                                    <button class="sample-btn"
+                                        data-smiles="CN1C=NC2=C1C(=O)N(C(=O)N2C)C">Кофеин</button>
+                                    <button class="sample-btn"
+                                        data-smiles="CC(C)CC1=CC=C(C=C1)C(C)C(=O)O">Ибупрофен</button>
+                                    <button class="sample-btn" data-smiles="c1ccccc1">Бензол</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Batch Input -->
+                        <div id="batchInput" style="display: none;">
+                            <label style="display: block; margin-bottom: 10px; font-weight: 600;">
+                                Список SMILES (по одному на строку):
+                            </label>
+                            <textarea id="batchSmiles" class="batch-input" placeholder="CC(=O)OC1=CC=CC=C1C(=O)O
+CN1C=NC2=C1C(=O)N(C(=O)N2C)C
+CC(C)CC1=CC=C(C=C1)C(C)C(=O)O"></textarea>
+                        </div>
+
+                        <button id="calculateBtn" class="btn" style="width: 100%; margin-top: 20px; padding: 15px;"
+                            disabled>
+                            <i class="fas fa-cogs"></i> Рассчитать дескрипторы
+                        </button>
+                    </div>
+
+                    <!-- Output Panel -->
+                    <div class="output-panel">
+                        <h3><i class="fas fa-chart-bar"></i> Результаты</h3>
+
+                        <div id="resultsArea" style="margin-top: 15px;">
+                            <p style="color: var(--text-secondary); text-align: center; padding: 40px 0;">
+                                <i class="fas fa-flask"
+                                    style="font-size: 3em; display: block; margin-bottom: 15px; opacity: 0.3;"></i>
+                                Введите SMILES и нажмите "Рассчитать"
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Block -->
+                <div
+                    style="margin-top: 40px; padding: 25px; background: linear-gradient(135deg, rgba(55, 118, 171, 0.1), rgba(255, 212, 59, 0.1)); border-radius: 12px; border-left: 4px solid #3776ab;">
+                    <h3><i class="fab fa-python"></i> Как это работает?</h3>
+                    <ul style="margin-top: 15px; line-height: 1.8;">
+                        <li><strong>Pyodide</strong> — это порт CPython для WebAssembly</li>
+                        <li>Python код выполняется <strong>локально в браузере</strong></li>
+                        <li>Данные <strong>не отправляются на сервер</strong></li>
+                        <li>Первая загрузка занимает ~10 секунд (скачивается ~10 МБ)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>© 2025 Университетский проект. Кафедра химии/биоинформатики.</p>
+        </div>
+    </footer>
+
+    <script src="../../script.js"></script>
+    <script>
+        // Pyodide Calculator Logic
+        let pyodide = null;
+        const pyStatus = document.getElementById('pyStatus');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const smilesInput = document.getElementById('smilesInput');
+        const batchSmiles = document.getElementById('batchSmiles');
+        const resultsArea = document.getElementById('resultsArea');
+        const singleMode = document.getElementById('singleMode');
+        const batchMode = document.getElementById('batchMode');
+        const singleInput = document.getElementById('singleInput');
+        const batchInput = document.getElementById('batchInput');
+
+        let isBatchMode = false;
+
+        // Mode switching
+        singleMode.addEventListener('click', () => {
+            isBatchMode = false;
+            singleMode.style.background = '';
+            batchMode.style.background = '#6c757d';
+            singleInput.style.display = 'block';
+            batchInput.style.display = 'none';
+        });
+
+        batchMode.addEventListener('click', () => {
+            isBatchMode = true;
+            batchMode.style.background = '';
+            singleMode.style.background = '#6c757d';
+            singleInput.style.display = 'none';
+            batchInput.style.display = 'block';
+        });
+
+        // Sample buttons
+        document.querySelectorAll('.sample-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                smilesInput.value = btn.dataset.smiles;
+            });
+        });
+
+        // Initialize Pyodide
+        async function initPyodide() {
+            try {
+                pyodide = await loadPyodide();
+
+                // Load Python code for molecular calculations
+                await pyodide.runPythonAsync(`
+import re
+from collections import Counter
+
+def parse_smiles(smiles):
+    """Parse SMILES and extract basic information."""
+    # Remove stereochemistry markers for simplicity
+    clean = re.sub(r'[@/\\\\]', '', smiles)
+    
+    # Count atoms
+    atoms = re.findall(r'[A-Z][a-z]?', smiles)
+    atom_counts = Counter(atoms)
+    
+    # Estimate hydrogen count (simplified)
+    h_count = 0
+    for atom, count in atom_counts.items():
+        if atom == 'C':
+            h_count += count * 2  # Rough estimate
+        elif atom in ['N', 'O']:
+            h_count += count
+    
+    return atoms, atom_counts, h_count
+
+def calculate_mw(smiles):
+    """Calculate molecular weight."""
+    weights = {'C': 12.011, 'H': 1.008, 'N': 14.007, 'O': 15.999, 
+               'S': 32.065, 'P': 30.974, 'F': 18.998, 'Cl': 35.453, 
+               'Br': 79.904, 'I': 126.904}
+    
+    atoms, atom_counts, h_count = parse_smiles(smiles)
+    
+    mw = 0
+    for atom, count in atom_counts.items():
+        mw += weights.get(atom, 12) * count
+    mw += h_count * 1.008
+    
+    return round(mw, 2)
+
+def calculate_logp(smiles):
+    """Estimate LogP using fragment method."""
+    logp = 0
+    atoms, atom_counts, _ = parse_smiles(smiles)
+    
+    # Simplified Wildman-Crippen
+    logp += atom_counts.get('C', 0) * 0.25
+    logp -= atom_counts.get('O', 0) * 0.5
+    logp -= atom_counts.get('N', 0) * 0.5
+    logp += atom_counts.get('Cl', 0) * 0.6
+    logp += atom_counts.get('Br', 0) * 0.8
+    logp += atom_counts.get('F', 0) * 0.3
+    logp += atom_counts.get('S', 0) * 0.2
+    
+    # Ring penalty
+    rings = smiles.count('1') + smiles.count('2') + smiles.count('3')
+    logp += rings * 0.1
+    
+    return round(max(-3, min(7, logp)), 2)
+
+def calculate_hbd(smiles):
+    """Count H-bond donors (OH, NH)."""
+    count = len(re.findall(r'O(?=[^=]|$)', smiles))
+    count += len(re.findall(r'N(?![=#])', smiles))
+    return max(0, count)
+
+def calculate_hba(smiles):
+    """Count H-bond acceptors (O, N)."""
+    count = smiles.count('O') + smiles.count('N')
+    return count
+
+def calculate_tpsa(smiles):
+    """Estimate TPSA (topological polar surface area)."""
+    # Simplified: O contributes ~20, N contributes ~26
+    tpsa = smiles.count('O') * 20.23 + smiles.count('N') * 26.02
+    return round(tpsa, 2)
+
+def calculate_rotatable_bonds(smiles):
+    """Estimate rotatable bonds."""
+    # Simple heuristic based on single bonds
+    single_bonds = smiles.count('-') + len(re.findall(r'[A-Z][a-z]?[A-Z]', smiles))
+    return max(0, single_bonds)
+
+def calculate_rings(smiles):
+    """Count rings."""
+    return len(re.findall(r'[0-9]', smiles)) // 2
+
+def calculate_descriptors(smiles):
+    """Calculate all descriptors for a SMILES."""
+    return {
+        'MW': calculate_mw(smiles),
+        'LogP': calculate_logp(smiles),
+        'HBD': calculate_hbd(smiles),
+        'HBA': calculate_hba(smiles),
+        'TPSA': calculate_tpsa(smiles),
+        'RotBonds': calculate_rotatable_bonds(smiles),
+        'Rings': calculate_rings(smiles)
+    }
+
+def lipinski_check(desc):
+    """Check Lipinski Rule of 5."""
+    rules = [
+        desc['MW'] <= 500,
+        desc['LogP'] <= 5,
+        desc['HBD'] <= 5,
+        desc['HBA'] <= 10
+    ]
+    return sum(rules), 4
+                `);
+
+                pyStatus.className = 'status-badge status-ready';
+                pyStatus.innerHTML = '<i class="fas fa-check"></i> Python готов';
+                calculateBtn.disabled = false;
+
+                // Hide loader overlay
+                const loader = document.getElementById('pyodideLoader');
+                if (loader) {
+                    loader.classList.add('hidden');
+                    setTimeout(() => loader.remove(), 600);
+                }
+
+            } catch (error) {
+                console.error('Pyodide error:', error);
+                pyStatus.className = 'status-badge status-error';
+                pyStatus.innerHTML = '<i class="fas fa-times"></i> Ошибка загрузки';
+
+                // Update loader with error
+                const loaderStatus = document.getElementById('loaderStatus');
+                const loader = document.getElementById('pyodideLoader');
+                if (loaderStatus) loaderStatus.textContent = 'Ошибка загрузки Pyodide';
+                if (loader) loader.querySelector('.loader-progress-bar').style.background = '#dc3545';
+            }
+        }
+
+        // Rotate chemistry facts during loading
+        const facts = [
+            '💡 Правило Липински помогает оценить биодоступность молекулы',
+            '🧬 SMILES — это язык описания структуры молекул',
+            '⚗️ LogP показывает растворимость в жирах vs воде',
+            '🔬 Pyodide позволяет запускать Python в браузере',
+            '📊 Дескрипторы — числовые характеристики молекул',
+            '💊 Drug-likeness оценивается по 4+ параметрам'
+        ];
+        let factIndex = 0;
+        const factInterval = setInterval(() => {
+            const factEl = document.getElementById('loaderFact');
+            if (factEl) {
+                factIndex = (factIndex + 1) % facts.length;
+                factEl.textContent = facts[factIndex];
+            } else {
+                clearInterval(factInterval);
+            }
+        }, 3000);
+
+        // Calculate descriptors
+        calculateBtn.addEventListener('click', async () => {
+            if (!pyodide) return;
+
+            const smilesList = isBatchMode
+                ? batchSmiles.value.split('\n').filter(s => s.trim())
+                : [smilesInput.value.trim()];
+
+            if (smilesList.length === 0 || smilesList[0] === '') {
+                resultsArea.innerHTML = '<p style="color: #dc3545;">Введите SMILES!</p>';
+                return;
+            }
+
+            resultsArea.innerHTML = '<p><i class="fas fa-spinner fa-spin"></i> Расчёт...</p>';
+
+            try {
+                let html = '';
+
+                for (let i = 0; i < smilesList.length; i++) {
+                    const smiles = smilesList[i].trim();
+                    if (!smiles) continue;
+
+                    const result = await pyodide.runPythonAsync(`
+import json
+desc = calculate_descriptors("${smiles}")
+passed, total = lipinski_check(desc)
+json.dumps({'descriptors': desc, 'lipinski_passed': passed, 'lipinski_total': total})
+                    `);
+
+                    const data = JSON.parse(result);
+                    const desc = data.descriptors;
+                    const lipinskiPass = data.lipinski_passed >= 3;
+
+                    html += `
+                        <div style="margin-bottom: 25px; padding: 20px; background: var(--bg-primary); border-radius: 12px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                <code style="font-size: 0.9em;">${smiles}</code>
+                                <span class="status-badge ${lipinskiPass ? 'status-ready' : 'status-error'}">
+                                    ${lipinskiPass ? '✓ Drug-like' : '✗ Not drug-like'} (${data.lipinski_passed}/${data.lipinski_total})
+                                </span>
+                            </div>
+                            <table class="descriptor-table">
+                                <tr><th>Дескриптор</th><th>Значение</th><th>Описание</th></tr>
+                                <tr><td>MW</td><td class="descriptor-value">${desc.MW}</td><td>Молекулярная масса (г/моль)</td></tr>
+                                <tr><td>LogP</td><td class="descriptor-value">${desc.LogP}</td><td>Липофильность</td></tr>
+                                <tr><td>HBD</td><td class="descriptor-value">${desc.HBD}</td><td>Доноры H-связей</td></tr>
+                                <tr><td>HBA</td><td class="descriptor-value">${desc.HBA}</td><td>Акцепторы H-связей</td></tr>
+                                <tr><td>TPSA</td><td class="descriptor-value">${desc.TPSA}</td><td>Полярная поверхность (Å²)</td></tr>
+                                <tr><td>RotBonds</td><td class="descriptor-value">${desc.RotBonds}</td><td>Вращаемые связи</td></tr>
+                                <tr><td>Rings</td><td class="descriptor-value">${desc.Rings}</td><td>Количество колец</td></tr>
+                            </table>
+                        </div>
+                    `;
+                }
+
+                resultsArea.innerHTML = html;
+
+                if (typeof showToast === 'function') {
+                    showToast(`Рассчитано ${smilesList.length} молекул(а)`);
+                }
+
+            } catch (error) {
+                console.error('Calculation error:', error);
+                resultsArea.innerHTML = `<p style="color: #dc3545;"><i class="fas fa-exclamation-triangle"></i> Ошибка: ${error.message}</p>`;
+            }
+        });
+
+        // Initialize on load
+        initPyodide();
+    </script>
+</body>
+
+</html>

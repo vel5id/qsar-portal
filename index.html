@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QSAR & In Silico Tools: Образовательный портал</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <meta name="description"
+        content="QSAR Portal - образовательный ресурс по In Silico моделированию, SwissADME, PASS, ADMETlab.">
+    <!-- Particles.js for Hero Animation -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">QSAR Portal 🧬</div>
+            <button class="theme-toggle" aria-label="Тема"><i class="fas fa-moon"></i></button>
+            <button class="menu-toggle" aria-label="Открыть меню"><i class="fas fa-bars"></i></button>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Главная</a></li>
+
+                    <li>
+                        <a href="pages/basics/index.html"><i class="fas fa-book"></i> Основы QSAR ▾</a>
+                        <ul>
+                            <li><a href="pages/basics/index.html#intro"><i class="fas fa-info-circle"></i> Что такое
+                                    QSAR?</a></li>
+                            <li><a href="pages/basics/index.html#descriptors"><i class="fas fa-cube"></i>
+                                    Дескрипторы</a></li>
+                            <li><a href="pages/basics/index.html#models"><i class="fas fa-project-diagram"></i>
+                                    Модели</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="pages/tools/hub.html"><i class="fas fa-laptop-code"></i> Инструменты ▾</a>
+                        <ul>
+                            <li><a href="pages/tools/swissadme.html">SwissADME</a></li>
+                            <li><a href="pages/tools/pass.html">PASS Online</a></li>
+                            <li><a href="pages/tools/admetlab.html">ADMETlab</a></li>
+                            <li><a href="pages/tools/pubchem.html">PubChem</a></li>
+                            <li><a href="pages/tools/hub.html"><i class="fas fa-table"></i> Сравнение</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="pages/practice/smiles.html"><i class="fas fa-flask"></i> Практика ▾</a>
+                        <ul>
+                            <li><a href="pages/practice/tutorial.html">Туториалы</a></li>
+                            <li><a href="pages/practice/smiles.html">Ввод SMILES</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="pages/literature/index.html"><i class="fas fa-graduation-cap"></i> Литература</a></li>
+                    <li><a href="pages/contacts.html"><i class="fas fa-envelope"></i> Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" style="position: relative; overflow: hidden;">
+            <!-- Particles Background -->
+            <div id="particles-js" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;">
+            </div>
+            <div class="container" style="position: relative; z-index: 1;">
+                <h1>Инструменты In Silico для прогнозирования биологической активности</h1>
+                <p>Учебный ресурс по QSAR, SwissADME, PASS, ADMETlab и другим инструментам.</p>
+                <a href="pages/basics/index.html" class="btn"><i class="fas fa-book-open"></i> Начать изучение</a>
+                <a href="pages/practice/smiles.html" class="btn"
+                    style="background: linear-gradient(135deg, #28a745, #20c997); margin-left: 10px;"><i
+                        class="fas fa-atom"></i> Анализ молекул</a>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="container">
+                <h2>О проекте</h2>
+                <p>Этот сайт создан для студентов и исследователей...</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>© 2025 Университетский проект. Кафедра химии/биоинформатики.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Particles.js Configuration - Chemistry Theme
+        if (typeof particlesJS !== 'undefined') {
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 50, density: { enable: true, value_area: 800 } },
+                    color: { value: ["#3498db", "#2ecc71", "#e74c3c", "#f1c40f", "#9b59b6"] },
+                    shape: {
+                        type: "circle"
+                    },
+                    opacity: { value: 0.6, random: true },
+                    size: { value: 4, random: true },
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: "#ffffff",
+                        opacity: 0.3,
+                        width: 1
+                    },
+                    move: {
+                        enable: true,
+                        speed: 2,
+                        direction: "none",
+                        random: true,
+                        straight: false,
+                        out_mode: "out",
+                        bounce: false
+                    }
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: { enable: true, mode: "grab" },
+                        onclick: { enable: true, mode: "push" },
+                        resize: true
+                    },
+                    modes: {
+                        grab: { distance: 140, line_linked: { opacity: 0.8 } },
+                        push: { particles_nb: 4 }
+                    }
+                },
+                retina_detect: true
+            });
+        }
+    </script>
+
+</body>
+
+</html>

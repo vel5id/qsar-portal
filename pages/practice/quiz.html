@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест по QSAR - QSAR Portal</title>
+    <meta name="description" content="Интерактивный тест для проверки знаний по QSAR моделированию.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="../../assets/images/favicon.png">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">QSAR Portal 🧬</div>
+            <button class="menu-toggle" aria-label="Меню"><i class="fas fa-bars"></i></button>
+            <button class="theme-toggle" aria-label="Тема"><i class="fas fa-moon"></i></button>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../../index.html"><i class="fas fa-home"></i> Главная</a></li>
+                    <li><a href="../../pages/basics/index.html"><i class="fas fa-book"></i> Основы QSAR</a></li>
+                    <li><a href="../tools/hub.html"><i class="fas fa-laptop-code"></i> Инструменты</a>
+                    </li>
+                    <li><a href="#" class="active"><i class="fas fa-flask"></i> Практика</a></li>
+                    <li><a href="../../pages/literature/index.html"><i class="fas fa-graduation-cap"></i> Литература</a>
+                    </li>
+                    <li><a href="../../pages/contacts.html"><i class="fas fa-envelope"></i> Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb"
+        style="background: var(--bg-secondary); padding: 10px 0; border-bottom: 1px solid var(--border-color);">
+        <div class="container">
+            <a href="../../index.html">Главная</a> /
+            <a href="tutorial.html">Практика</a> /
+            <span>Тест</span>
+        </div>
+    </nav>
+
+    <main>
+        <section class="content-section">
+            <div class="container">
+                <h1><i class="fas fa-clipboard-check"></i> Тест: Основы QSAR</h1>
+                <p style="margin-bottom: 30px;">Проверьте свои знания по методологии QSAR. Ответьте на 3 вопроса.</p>
+
+                <form id="quizForm"
+                    style="background: var(--bg-secondary); padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px var(--shadow);">
+
+                    <!-- Question 1 -->
+                    <div class="quiz-question" style="margin-bottom: 25px;">
+                        <p style="font-weight: 600; margin-bottom: 10px;">1. Что означает аббревиатура QSAR?</p>
+                        <label style="display: block; padding: 8px 0; cursor: pointer;">
+                            <input type="radio" name="q1" value="a"> Качественный анализ структуры
+                        </label>
+                        <label style="display: block; padding: 8px 0; cursor: pointer;">
+                            <input type="radio" name="q1" value="b"> Квантово-статистический анализ
+                        </label>
+                        <label style="display: block; padding: 8px 0; cursor: pointer;">
+                            <input type="radio" name="q1" value="c"> Количественная связь структура-активность
+                        </label>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div class="quiz-question" style="margin-bottom: 25px;">
+                        <p style="font-weight: 600; margin-bottom: 10px;">2. Какой дескриптор описывает липофильность
+                            молекулы?</p>
+                        <label style="display: block; padding: 8px 0; cursor: pointer;">
+                            <input type="radio" name="q2" value="a"> TPSA
+                        </label>
+                        <label style="display: block; padding: 8px 0; cursor: pointer;">
+                            <input type="radio" name="q2" value="b"> LogP
+                        </label>
+                        <label style="display: block; padding: 8px 0; cursor: pointer;">
+                            <input type="radio" name="q2" value="c"> MW
+                        </label>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div class="quiz-question" style="margin-bottom: 25px;">
+                        <p style="font-weight: 600; margin-bottom: 10px;">3. Какой метод чаще используется для
+                            предсказания непрерывных значений IC50?</p>
+                        <label style="display: block; padding: 8px 0; cursor: pointer;">
+                            <input type="radio" name="q3" value="a"> Регрессия
+                        </label>
+                        <label style="display: block; padding: 8px 0; cursor: pointer;">
+                            <input type="radio" name="q3" value="b"> Классификация
+                        </label>
+                        <label style="display: block; padding: 8px 0; cursor: pointer;">
+                            <input type="radio" name="q3" value="c"> Кластеризация
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn"><i class="fas fa-check-circle"></i> Проверить ответы</button>
+                </form>
+
+                <div id="quizResult"
+                    style="display: none; margin-top: 20px; padding: 20px; border-radius: 8px; font-size: 1.2em; text-align: center;">
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <a href="../../pages/basics/index.html" class="btn" style="background: #6c757d;"><i
+                            class="fas fa-book"></i> Повторить теорию</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>© 2025 Университетский проект. Кафедра химии/биоинформатики.</p>
+        </div>
+    </footer>
+
+    <script src="../../script.js"></script>
+</body>
+
+</html>

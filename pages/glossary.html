@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Глоссарий - QSAR Portal</title>
+    <meta name="description" content="Глоссарий терминов QSAR, хеминформатики и фармакокинетики.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">QSAR Portal 🧬</div>
+            <button class="menu-toggle" aria-label="Меню"><i class="fas fa-bars"></i></button>
+            <button class="theme-toggle" aria-label="Тема"><i class="fas fa-moon"></i></button>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html"><i class="fas fa-home"></i> Главная</a></li>
+                    <li><a href="basics/index.html"><i class="fas fa-book"></i> Основы QSAR</a></li>
+                    <li><a href="tools/hub.html"><i class="fas fa-laptop-code"></i> Инструменты</a></li>
+                    <li><a href="practice/tutorial.html"><i class="fas fa-flask"></i> Практика</a></li>
+                    <li><a href="literature/index.html"><i class="fas fa-graduation-cap"></i> Литература</a></li>
+                    <li><a href="contacts.html"><i class="fas fa-envelope"></i> Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb"
+        style="background: var(--bg-secondary); padding: 10px 0; border-bottom: 1px solid var(--border-color);">
+        <div class="container">
+            <a href="../index.html">Главная</a> /
+            <span>Глоссарий</span>
+        </div>
+    </nav>
+
+    <main>
+        <section class="content-section">
+            <div class="container">
+                <h1><i class="fas fa-book-open"></i> Глоссарий терминов</h1>
+                <p style="margin-bottom: 30px;">Основные термины и определения, используемые в QSAR и хеминформатике.
+                </p>
+
+                <div style="display: grid; gap: 15px;">
+
+                    <details
+                        style="background: var(--bg-secondary); padding: 15px 20px; border-radius: 8px; border-left: 4px solid var(--accent-secondary); cursor: pointer;">
+                        <summary style="font-weight: 600; font-size: 1.1em;">ADME</summary>
+                        <p style="margin-top: 10px; color: var(--text-secondary);">
+                            <strong>Absorption, Distribution, Metabolism, Excretion</strong> — четыре основных
+                            фармакокинетических процесса, определяющих судьбу лекарственного вещества в организме.
+                        </p>
+                    </details>
+
+                    <details
+                        style="background: var(--bg-secondary); padding: 15px 20px; border-radius: 8px; border-left: 4px solid var(--accent-secondary);">
+                        <summary style="font-weight: 600; font-size: 1.1em;">ADMET</summary>
+                        <p style="margin-top: 10px; color: var(--text-secondary);">
+                            ADME + <strong>Toxicity</strong>. Расширенная модель, включающая оценку токсичности
+                            соединения.
+                        </p>
+                    </details>
+
+                    <details
+                        style="background: var(--bg-secondary); padding: 15px 20px; border-radius: 8px; border-left: 4px solid var(--accent-secondary);">
+                        <summary style="font-weight: 600; font-size: 1.1em;">Дескриптор (Descriptor)</summary>
+                        <p style="margin-top: 10px; color: var(--text-secondary);">
+                            Числовая характеристика молекулы, используемая для построения QSAR-моделей. Примеры:
+                            молекулярная масса (MW), LogP, TPSA.
+                        </p>
+                    </details>
+
+                    <details
+                        style="background: var(--bg-secondary); padding: 15px 20px; border-radius: 8px; border-left: 4px solid var(--accent-secondary);">
+                        <summary style="font-weight: 600; font-size: 1.1em;">LogP</summary>
+                        <p style="margin-top: 10px; color: var(--text-secondary);">
+                            Логарифм коэффициента распределения между октанолом и водой. Мера липофильности молекулы.
+                            Оптимально: 1–3.
+                        </p>
+                    </details>
+
+                    <details
+                        style="background: var(--bg-secondary); padding: 15px 20px; border-radius: 8px; border-left: 4px solid var(--accent-secondary);">
+                        <summary style="font-weight: 600; font-size: 1.1em;">SMILES</summary>
+                        <p style="margin-top: 10px; color: var(--text-secondary);">
+                            <strong>Simplified Molecular Input Line Entry System</strong> — линейная текстовая нотация
+                            для представления химических структур. Пример: <code>CC(=O)OC1=CC=CC=C1C(=O)O</code>
+                            (Аспирин).
+                        </p>
+                    </details>
+
+                    <details
+                        style="background: var(--bg-secondary); padding: 15px 20px; border-radius: 8px; border-left: 4px solid var(--accent-secondary);">
+                        <summary style="font-weight: 600; font-size: 1.1em;">TPSA</summary>
+                        <p style="margin-top: 10px; color: var(--text-secondary);">
+                            <strong>Topological Polar Surface Area</strong> — площадь полярной поверхности молекулы
+                            (Å²). Связана с проницаемостью мембран. Оптимально: < 140 Å². </p>
+                    </details>
+
+                    <details
+                        style="background: var(--bg-secondary); padding: 15px 20px; border-radius: 8px; border-left: 4px solid var(--accent-secondary);">
+                        <summary style="font-weight: 600; font-size: 1.1em;">Правило Липинского (Rule of 5)</summary>
+                        <p style="margin-top: 10px; color: var(--text-secondary);">
+                            Эмпирическое правило для оценки drug-likeness: MW ≤ 500, LogP ≤ 5, HBD ≤ 5, HBA ≤ 10.
+                        </p>
+                    </details>
+
+                    <details
+                        style="background: var(--bg-secondary); padding: 15px 20px; border-radius: 8px; border-left: 4px solid var(--accent-secondary);">
+                        <summary style="font-weight: 600; font-size: 1.1em;">Pa / Pi (PASS)</summary>
+                        <p style="margin-top: 10px; color: var(--text-secondary);">
+                            <strong>Probability of being Active / Inactive</strong> — вероятности, выдаваемые программой
+                            PASS для различных видов биологической активности.
+                        </p>
+                    </details>
+
+                </div>
+
+                <div style="margin-top: 40px; text-align: center;">
+                    <a href="basics/index.html" class="btn"><i class="fas fa-arrow-left"></i> К основам QSAR</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>© 2025 Университетский проект. Кафедра химии/биоинформатики.</p>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+
+</html>
